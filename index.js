@@ -53,6 +53,7 @@ app.get("/getkeyword", async (req, res) => {
 
     // Execute all requests in parallel
     const responses = await Promise.all(requests);
+    console.log(responses);
 
     // Process responses (convert CSV to JSON and extract keywords)
     const csvToJson = (csvString) => {
@@ -72,7 +73,7 @@ app.get("/getkeyword", async (req, res) => {
     const allKeywords = responses.flatMap((response) => {
       const csvString = response.data;
       const json = csvToJson(csvString);
-      return json.map((entry) => entry.Keyword);
+      return json;
     });
 
     return res.status(200).json({ message: allKeywords });
